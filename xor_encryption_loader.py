@@ -12,4 +12,4 @@ if __name__ == '__main__':
         data = f.read()
     encrypted_data = xor_encrypt(data, key)
     with open('Chestfarming-op.enc', 'wb') as f:
-        f.write(encrypted_data)
+        f.write
