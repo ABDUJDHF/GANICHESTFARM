@@ -12,7 +12,7 @@ print(string.rep("🔥", 50) .. "\n")
 -- ⚡ الإعدادات
 getgenv().Server_Hop = true
 getgenv().Chest_Farm = true
-getgenv().wait_Time = 90
+getgenv().wait_Time = 13000
 getgenv().AutoStopOnGodChalice = true
 
 -- 💾 تحميل الإعدادات + إنشاء الملف
