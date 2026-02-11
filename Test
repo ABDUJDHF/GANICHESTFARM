@@ -231,6 +231,7 @@ spawn(function()
                         fr.Parent = n
                         fr.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
                         fr.BackgroundTransparency = 0.2
+                        fr.BorderSizePixel = 0
                         fr.Position = UDim2.new(0.5, -150, 0.5, -50)
                         fr.Size = UDim2.new(0, 300, 0, 100)
                         
@@ -400,6 +401,4 @@ print("✅ Chest Farm: SMART TOUCHINTEREST CHECK")
 print("✅ Only collects chests with TouchInterest")
 print("✅ Settings: LOADED")
 print("✅ Anti-Kick: SERVER HOP")
-print(string.rep("✨", 35) .. "\n")
-
-end
+print(string.rep("✨", 35) .. "\n") 
