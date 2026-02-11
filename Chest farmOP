@@ -1,4 +1,37 @@
-getgenv().Server_Hop=true getgenv().Chest_Farm=true getgenv().wait_Time=90 getgenv().AutoStopOnGodChalice=true;local settingsFile="DevGani_Settings.json" pcall(function()settings=game:GetService('HttpService'):JSONDecode(readfile(settingsFile))getgenv().AutoStopOnGodChalice=settings.AutoStopOnGodChalice or true end)spawn(function()wait(2)local s=Instance.new("ScreenGui")s.Name="DevGaniControl"s.Parent=game:GetService("CoreGui")s.ResetOnSpawn=false local f=Instance.new("Frame")f.Parent=s f.BackgroundColor3=Color3.fromRGB(30,30,30)f.BackgroundTransparency=0.15 f.BorderSizePixel=0 f.Position=UDim2.new(0.85,0,0.1,0)f.Size=UDim2.new(0,60,0,60)f.ClipsDescendants=true Instance.new("UICorner").Parent=f.CornerRadius=UDim.new(0,30)local st=Instance.new("UIStroke")st.Parent=f st.Color=Color3.fromRGB(255,255,255)st.Thickness=2 st.Transparency=0.5 local b=Instance.new("TextButton")b.Parent=f b.Size=UDim2.new(1,0,1,0)b.BackgroundColor3=getgenv().AutoStopOnGodChalice and Color3.fromRGB(0,255,0)or Color3.fromRGB(255,0,0)b.BackgroundTransparency=0.2 b.Text=getgenv().AutoStopOnGodChalice and"✅"or"❌"b.TextColor3=Color3.fromRGB(255,255,255)b.TextScaled=true b.Font=Enum.Font.GothamBold b.BorderSizePixel=0 local bc=Instance.new("UICorner")bc.Parent=b bc.CornerRadius=UDim.new(0,30)local t=Instance.new("TextLabel")t.Parent=s t.BackgroundTransparency=1 t.Position=UDim2.new(0.85,70,0.1,15)t.Size=UDim2.new(0,150,0,30)t.Text="God Chalice Stop"t.TextColor3=Color3.fromRGB(255,255,255)t.TextScaled=true t.Font=Enum.Font.GothamBold t.BackgroundTransparency=1 t.TextXAlignment=Enum.TextXAlignment.Left local g=Instance.new("ImageLabel")g.Parent=f g.BackgroundTransparency=1 g.Position=UDim2.new(0,-10,0,-10)g.Size=UDim2.new(1,20,1,20)g.Image="rbxassetid://4996896642"g.ImageColor3=getgenv().AutoStopOnGodChalice and Color3.fromRGB(0,255,0)or Color3.fromRGB(255,0,0)g.ImageTransparency=0.7 local function sv()writefile(settingsFile,game:GetService('HttpService'):JSONEncode({AutoStopOnGodChalice=getgenv().AutoStopOnGodChalice}))end b.MouseButton1Click:Connect(function()getgenv().AutoStopOnGodChalice=not getgenv().AutoStopOnGodChalice b.BackgroundColor3=getgenv().AutoStopOnGodChalice and Color3.fromRGB(0,255,0)or Color3.fromRGB(255,0,0)b.Text=getgenv().AutoStopOnGodChalice and"✅"or"❌"g.ImageColor3=getgenv().AutoStopOnGodChalice and Color3.fromRGB(0,255,0)or Color3.fromRGB(255,0,0)sv()end)end)spawn(function()while wait(1)do if getgenv().AutoStopOnGodChalice then pcall(function()for _,o in pairs(workspace:GetDescendants())do if(o:IsA("Tool")or o:IsA("Part"))and(o.Name=="God Chalice"or o.Name=="Fist of Darkness")then print("\n"..string.rep("💎",40).."\n💎 "..o.Name.." DETECTED!\n💎 Stopping chest farm to protect item!\n"..string.rep("💎",40).."\n")getgenv().Chest_Farm=false local n=Instance.new("ScreenGui")n.Parent=game:GetService("CoreGui")n.Name="ItemAlert"local fr=Instance.new("Frame")fr.Parent=n fr.BackgroundColor3=Color3.fromRGB(0,0,0)fr.BackgroundTransparency=0.2 fr.BorderSizePixel=0 fr.Position=UDim2.new(0.5,-150,0.5,-50)fr.Size=UDim2.new(0,300,0,100)Instance.new("UICorner").Parent=fr.CornerRadius=UDim.new(0,10)local tx=Instance.new("TextLabel")tx.Parent=fr tx.Size=UDim2.new(1,0,1,0)tx.BackgroundTransparency=1 tx.Text="💎 "..o.Name.." FOUND!\n⏸️ Farm Stopped"tx.TextColor3=Color3.fromRGB(255,215,0)tx.TextScaled=true tx.Font=Enum.Font.GothamBold wait(5)n:Destroy()break end end end)end end end)local speed={teleport=0.1,touch=0.01,wait=0.3}spawn(function()wait(3)while task.wait(speed.wait)do if getgenv().Chest_Farm then pcall(function()local c=game.Players.LocalPlayer.Character if c then local h=c:FindFirstChild("HumanoidRootPart")if h then local l={}for _,o in pairs(workspace:GetDescendants())do if o:IsA("BasePart")and(o.Name=="Chest3"or o.Name=="Chest2"or o.Name=="Chest1")then table.insert(l,{part=o,name=o.Name,d=(h.Position-o.Position).Magnitude,p=o.Name=="Chest3"and 1 or o.Name=="Chest2"and 2 or 3})end end table.sort(l,function(a,b)if a.p==b.p then return a.d<b.d end return a.p<b.p end)for _,d in ipairs(l)do if not getgenv().Chest_Farm then break end h.CFrame=d.part.CFrame*CFrame.new(0,2,0)task.wait(speed.teleport)for i=1,3 do firetouchinterest(h,d.part,0)task.wait(speed.touch)firetouchinterest(h,d.part,1)task.wait(speed.touch)end if d.name=="Chest3"then print("💰 CHEST3 +2000")end end end end end)end end end)spawn(function()wait(1)for a=1,5 do pcall(function()game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam","Pirates")end)if game.Players.LocalPlayer.Team and game.Players.LocalPlayer.Team.Name=="Pirates"then print("✅ Pirates team selected!")break end wait(0.3)end end)repeat wait()until game.CoreGui:FindFirstChild('RobloxPromptGui')local po=game.CoreGui.RobloxPromptGui.promptOverlay local ts=game:GetService('TeleportService')po.ChildAdded:connect(function(a)if a.Name=='ErrorPrompt'then print("\n🚨 KICK DETECTED! REJOINING...")repeat ts:Teleport(game.PlaceId)wait(2)until false end end)local P=game.PlaceId local A={}local f=""local h=os.date("!*t").hour pcall(function()A=game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))end)function T()local s=game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/'..P..'/servers/Public?sortOrder=Asc&limit=100'))for _,v in pairs(s.data)do if v.playing<v.maxPlayers then local i=tostring(v.id)local p=true for _,e in pairs(A)do if i==tostring(e)then p=false break end end if p then table.insert(A,i)writefile("NotSameServers.json",game:GetService('HttpService'):JSONEncode(A))game:GetService("TeleportService"):TeleportToPlaceInstance(P,i,game.Players.LocalPlayer)wait(4)end end end end function Teleport()print("🔄 Server hopping...")T()end spawn(function()while wait()do if getgenv().Server_Hop then wait(getgenv().wait_Time)Teleport()end end end)print("\n"..string.rep("⚡",25).."\n⚡ ULTRA SPEED MODE ACTIVE!\n✅ Green = Auto-stop ON\n✅ Red = Auto-stop OFF\n✅ Settings saved to Delta files\n✅ Made by Dev.Gani | Discord: d.6a\n"..string.rep("⚡",25))    frame.Parent = screenGui
+-- ============================================
+-- 🔥 BLOX FRUITS AUTOFARM SCRIPT 🔥
+--      Made by Dev.Gani
+--      Discord: d.6a
+-- ============================================
+print("\n" .. string.rep("=", 50))
+print("🔥 BLOX FRUITS AUTOFARM SCRIPT 🔥")
+print("      Made by Dev.Gani")
+print("      Discord: d.6a")
+print(string.rep("=", 50) .. "\n")
+
+getgenv().Server_Hop = true
+getgenv().Chest_Farm = true
+getgenv().wait_Time = 90
+getgenv().AutoStopOnGodChalice = true
+
+-- ✅ تحميل الإعدادات المحفوظة
+local settingsFile = "DevGani_Settings.json"
+local settings = {}
+pcall(function()
+    settings = game:GetService('HttpService'):JSONDecode(readfile(settingsFile))
+    getgenv().AutoStopOnGodChalice = settings.AutoStopOnGodChalice or true
+end)
+
+-- 🔥 زر التحكم الأنيق
+spawn(function()
+    wait(2)
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "DevGaniControl"
+    screenGui.Parent = game:GetService("CoreGui")
+    screenGui.ResetOnSpawn = false
+    
+    local frame = Instance.new("Frame")
+    frame.Parent = screenGui
     frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
     frame.BackgroundTransparency = 0.15
     frame.BorderSizePixel = 0
@@ -71,7 +104,6 @@ getgenv().Server_Hop=true getgenv().Chest_Farm=true getgenv().wait_Time=90 getge
     end)
 end)
 
-
 -- 🔥 مراقبة God Chalice و Fist of Darkness
 spawn(function()
     while wait(1) do
@@ -125,14 +157,12 @@ spawn(function()
     end
 end)
 
-
 -- 🔥 نظام السرعة القصوى
 local speed = {
     teleport = 0.1,      -- سرعة التليپورت
     touch = 0.01,        -- سرعة اللمس
     wait = 0.3           -- انتظار بين الصدور
 }
-
 
 -- ============================================
 -- 📦 نظام جمع الصدور - سرعة خارقة!
@@ -199,7 +229,6 @@ spawn(function()
    end
 end)
 
-
 -- ⚔️ اختيار الفريق (أسرع)
 spawn(function()
     wait(1)
@@ -215,12 +244,10 @@ spawn(function()
     end
 end)
 
-
 -- 🔥 نظام كشف الكيك
 repeat wait() until game.CoreGui:FindFirstChild('RobloxPromptGui')
 local po = game.CoreGui.RobloxPromptGui.promptOverlay
 local ts = game:GetService('TeleportService')
-
 
 po.ChildAdded:connect(function(a)
     if a.Name == 'ErrorPrompt' then
@@ -232,18 +259,15 @@ po.ChildAdded:connect(function(a)
     end
 end)
 
-
 -- 🔄 نظام السيرفر
 local PlaceID = game.PlaceId
 local AllIDs = {}
 local foundAnything = ""
 local actualHour = os.date("!*t").hour
 
-
 pcall(function()
     AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
 end)
-
 
 function TPReturner()
     local Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
@@ -270,12 +294,10 @@ function TPReturner()
     end
 end
 
-
 function Teleport()
     print("🔄 Server hopping...")
     TPReturner()
 end
-
 
 -- 🚀 القفز العادي
 spawn(function()
@@ -287,7 +309,6 @@ spawn(function()
     end
 end)
 
-
 print("\n" .. string.rep("⚡", 25))
 print("⚡ ULTRA SPEED MODE ACTIVE!")
 print("✅ Green = Auto-stop ON")
@@ -295,6 +316,5 @@ print("✅ Red = Auto-stop OFF")
 print("✅ Settings saved to Delta files")
 print("✅ Made by Dev.Gani | Discord: d.6a")
 print(string.rep("⚡", 25))
-
 
 end
