@@ -1,10 +1,10 @@
 -- ============================================
--- 🔥 BLOX FRUITS ULTIMATE FARM V3 🔥
+-- 🔥 BLOX FRUITS ULTIMATE FARM V4 🔥
 --      Made by Dev.Gani
 --      Discord: d.6a
 -- ============================================
 print("\n" .. string.rep("🔥", 50))
-print("🔥 BLOX FRUITS ULTIMATE FARM V3 🔥")
+print("🔥 BLOX FRUITS ULTIMATE FARM V4 🔥")
 print("      Made by Dev.Gani")
 print("      Discord: d.6a")
 print(string.rep("🔥", 50) .. "\n")
@@ -15,98 +15,196 @@ getgenv().Chest_Farm = true
 getgenv().wait_Time = 90
 getgenv().AutoStopOnGodChalice = true
 
--- 💾 تحميل الإعدادات
+-- 💾 تحميل الإعدادات + إنشاء الملف
 local settingsFile = "DevGani_Settings.json"
-pcall(function()
-    local s = game:GetService('HttpService'):JSONDecode(readfile(settingsFile))
-    getgenv().AutoStopOnGodChalice = s.AutoStopOnGodChalice or true
-end)
+local function loadSettings()
+    local success, result = pcall(function()
+        return game:GetService('HttpService'):JSONDecode(readfile(settingsFile))
+    end)
+    if success then
+        getgenv().AutoStopOnGodChalice = result.AutoStopOnGodChalice
+        print("✅ Settings loaded: " .. (getgenv().AutoStopOnGodChalice and "ON" or "OFF"))
+    else
+        local defaultSettings = {AutoStopOnGodChalice = true}
+        writefile(settingsFile, game:GetService('HttpService'):JSONEncode(defaultSettings))
+        getgenv().AutoStopOnGodChalice = true
+        print("📁 New settings file created - Auto-stop: ON")
+    end
+end
+loadSettings()
 
--- 🎨 إشعار Dev.Gani على الشاشة
+-- 💾 حفظ الإعدادات
+local function saveSettings()
+    local settings = {AutoStopOnGodChalice = getgenv().AutoStopOnGodChalice}
+    writefile(settingsFile, game:GetService('HttpService'):JSONEncode(settings))
+end
+
+-- 🎨 إشعار Dev.Gani
 spawn(function()
     wait(1)
     local gui = Instance.new("ScreenGui")
     gui.Name = "DevGaniNotif"
     gui.Parent = game:GetService("CoreGui")
+    gui.ResetOnSpawn = false
     
     local frame = Instance.new("Frame")
     frame.Parent = gui
-    frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-    frame.BackgroundTransparency = 0.2
+    frame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+    frame.BackgroundTransparency = 0.1
     frame.BorderSizePixel = 0
-    frame.Position = UDim2.new(0.75, 0, 0.02, 0)
-    frame.Size = UDim2.new(0.22, 0, 0.06, 0)
+    frame.Position = UDim2.new(0.78, 0, 0.85, 0)
+    frame.Size = UDim2.new(0, 200, 0, 50)
+    frame.AnchorPoint = Vector2.new(0.5, 0.5)
     
     local corner = Instance.new("UICorner")
     corner.Parent = frame
-    corner.CornerRadius = UDim.new(0, 10)
+    corner.CornerRadius = UDim.new(0, 8)
+    
+    local line = Instance.new("Frame")
+    line.Parent = frame
+    line.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+    line.BorderSizePixel = 0
+    line.Position = UDim2.new(0, 0, 0, 0)
+    line.Size = UDim2.new(0, 4, 1, 0)
+    
+    local lineCorner = Instance.new("UICorner")
+    lineCorner.Parent = line
+    lineCorner.CornerRadius = UDim.new(0, 4)
     
     local text = Instance.new("TextLabel")
     text.Parent = frame
-    text.Size = UDim2.new(1, 0, 1, 0)
+    text.Size = UDim2.new(1, -10, 1, 0)
+    text.Position = UDim2.new(0, 10, 0, 0)
     text.BackgroundTransparency = 1
-    text.Text = "🔥 Made by Dev.Gani\n💬 Discord: d.6a"
-    text.TextColor3 = Color3.fromRGB(255, 100, 100)
+    text.Text = "🔥 Dev.Gani\n💬 d.6a"
+    text.TextColor3 = Color3.fromRGB(255, 255, 255)
     text.TextScaled = true
-    text.Font = Enum.Font.GothamBold
-    text.TextStrokeTransparency = 0.5
+    text.Font = Enum.Font.GothamSemibold
+    text.TextXAlignment = Enum.TextXAlignment.Left
     
     wait(20)
     gui:Destroy()
 end)
 
--- 🎮 زر التحكم الأنيق
+-- 🎮 زر التحكم الأنيق V2
 spawn(function()
     wait(2)
     local s = Instance.new("ScreenGui")
     s.Name = "DevGaniControl"
     s.Parent = game:GetService("CoreGui")
     s.ResetOnSpawn = false
+    s.IgnoreGuiInset = true
     
-    local f = Instance.new("Frame")
-    f.Parent = s
-    f.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-    f.BackgroundTransparency = 0.15
-    f.BorderSizePixel = 0
-    f.Position = UDim2.new(0.85, 0, 0.1, 0)
-    f.Size = UDim2.new(0, 60, 0, 60)
+    local main = Instance.new("Frame")
+    main.Parent = s
+    main.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+    main.BackgroundTransparency = 0.15
+    main.BorderSizePixel = 0
+    main.Position = UDim2.new(0.03, 0, 0.15, 0)
+    main.Size = UDim2.new(0, 240, 0, 70)
     
-    Instance.new("UICorner").Parent = f.CornerRadius = UDim.new(0, 30)
+    local mainCorner = Instance.new("UICorner")
+    mainCorner.Parent = main
+    mainCorner.CornerRadius = UDim.new(0, 12)
     
-    local b = Instance.new("TextButton")
-    b.Parent = f
-    b.Size = UDim2.new(1, 0, 1, 0)
-    b.BackgroundColor3 = getgenv().AutoStopOnGodChalice and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)
-    b.BackgroundTransparency = 0.2
-    b.Text = getgenv().AutoStopOnGodChalice and "✅" or "❌"
-    b.TextColor3 = Color3.fromRGB(255, 255, 255)
-    b.TextScaled = true
-    b.Font = Enum.Font.GothamBold
-    b.BorderSizePixel = 0
+    local stroke = Instance.new("UIStroke")
+    stroke.Parent = main
+    stroke.Color = Color3.fromRGB(80, 80, 80)
+    stroke.Thickness = 1.5
+    stroke.Transparency = 0.3
     
-    Instance.new("UICorner").Parent = b.CornerRadius = UDim.new(0, 30)
+    local shadow = Instance.new("ImageLabel")
+    shadow.Parent = main
+    shadow.BackgroundTransparency = 1
+    shadow.Position = UDim2.new(0, -5, 0, -5)
+    shadow.Size = UDim2.new(1, 10, 1, 10)
+    shadow.Image = "rbxassetid://1316045217"
+    shadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
+    shadow.ImageTransparency = 0.7
+    shadow.ScaleType = Enum.ScaleType.Slice
+    shadow.SliceCenter = Rect.new(10, 10, 118, 118)
     
-    local t = Instance.new("TextLabel")
-    t.Parent = s
-    t.BackgroundTransparency = 1
-    t.Position = UDim2.new(0.85, 70, 0.1, 15)
-    t.Size = UDim2.new(0, 150, 0, 30)
-    t.Text = "God Chalice Stop"
-    t.TextColor3 = Color3.fromRGB(255, 255, 255)
-    t.TextScaled = true
-    t.Font = Enum.Font.GothamBold
-    t.TextXAlignment = Enum.TextXAlignment.Left
+    local iconFrame = Instance.new("Frame")
+    iconFrame.Parent = main
+    iconFrame.BackgroundColor3 = getgenv().AutoStopOnGodChalice and Color3.fromRGB(0, 180, 0) or Color3.fromRGB(180, 0, 0)
+    iconFrame.BackgroundTransparency = 0.1
+    iconFrame.BorderSizePixel = 0
+    iconFrame.Position = UDim2.new(0, 10, 0.5, -20)
+    iconFrame.Size = UDim2.new(0, 40, 0, 40)
     
-    b.MouseButton1Click:Connect(function()
+    local iconCorner = Instance.new("UICorner")
+    iconCorner.Parent = iconFrame
+    iconCorner.CornerRadius = UDim.new(0, 10)
+    
+    local icon = Instance.new("TextLabel")
+    icon.Parent = iconFrame
+    icon.Size = UDim2.new(1, 0, 1, 0)
+    icon.BackgroundTransparency = 1
+    icon.Text = getgenv().AutoStopOnGodChalice and "🛡️" or "⚔️"
+    icon.TextColor3 = Color3.fromRGB(255, 255, 255)
+    icon.TextScaled = true
+    icon.Font = Enum.Font.GothamBold
+    
+    local title = Instance.new("TextLabel")
+    title.Parent = main
+    title.BackgroundTransparency = 1
+    title.Position = UDim2.new(0, 60, 0, 12)
+    title.Size = UDim2.new(0, 120, 0, 20)
+    title.Text = "God Chalice Protection"
+    title.TextColor3 = Color3.fromRGB(220, 220, 220)
+    title.TextScaled = true
+    title.Font = Enum.Font.GothamBold
+    title.TextXAlignment = Enum.TextXAlignment.Left
+    
+    local status = Instance.new("TextLabel")
+    status.Parent = main
+    status.BackgroundTransparency = 1
+    status.Position = UDim2.new(0, 60, 0, 35)
+    status.Size = UDim2.new(0, 100, 0, 20)
+    status.Text = getgenv().AutoStopOnGodChalice and "🟢 ACTIVE" or "🔴 DISABLED"
+    status.TextColor3 = getgenv().AutoStopOnGodChalice and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 100, 100)
+    status.TextScaled = true
+    status.Font = Enum.Font.GothamSemibold
+    status.TextXAlignment = Enum.TextXAlignment.Left
+    
+    local button = Instance.new("TextButton")
+    button.Parent = main
+    button.BackgroundColor3 = getgenv().AutoStopOnGodChalice and Color3.fromRGB(0, 150, 0) or Color3.fromRGB(150, 0, 0)
+    button.BackgroundTransparency = 0.2
+    button.BorderSizePixel = 0
+    button.Position = UDim2.new(0, 185, 0.5, -15)
+    button.Size = UDim2.new(0, 45, 0, 30)
+    
+    local buttonCorner = Instance.new("UICorner")
+    buttonCorner.Parent = button
+    buttonCorner.CornerRadius = UDim.new(0, 8)
+    
+    local buttonText = Instance.new("TextLabel")
+    buttonText.Parent = button
+    buttonText.Size = UDim2.new(1, 0, 1, 0)
+    buttonText.BackgroundTransparency = 1
+    buttonText.Text = getgenv().AutoStopOnGodChalice and "ON" or "OFF"
+    buttonText.TextColor3 = Color3.fromRGB(255, 255, 255)
+    buttonText.TextScaled = true
+    buttonText.Font = Enum.Font.GothamBold
+    
+    button.MouseButton1Click:Connect(function()
         getgenv().AutoStopOnGodChalice = not getgenv().AutoStopOnGodChalice
-        b.BackgroundColor3 = getgenv().AutoStopOnGodChalice and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)
-        b.Text = getgenv().AutoStopOnGodChalice and "✅" or "❌"
-        writefile(settingsFile, game:GetService('HttpService'):JSONEncode({AutoStopOnGodChalice = getgenv().AutoStopOnGodChalice}))
-        print(getgenv().AutoStopOnGodChalice and "🟢 Auto-stop ON" or "🔴 Auto-stop OFF")
+        getgenv().Chest_Farm = true
+        
+        iconFrame.BackgroundColor3 = getgenv().AutoStopOnGodChalice and Color3.fromRGB(0, 180, 0) or Color3.fromRGB(180, 0, 0)
+        icon.Text = getgenv().AutoStopOnGodChalice and "🛡️" or "⚔️"
+        status.Text = getgenv().AutoStopOnGodChalice and "🟢 ACTIVE" or "🔴 DISABLED"
+        status.TextColor3 = getgenv().AutoStopOnGodChalice and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 100, 100)
+        button.BackgroundColor3 = getgenv().AutoStopOnGodChalice and Color3.fromRGB(0, 150, 0) or Color3.fromRGB(150, 0, 0)
+        buttonText.Text = getgenv().AutoStopOnGodChalice and "ON" or "OFF"
+        
+        saveSettings()
+        print(getgenv().AutoStopOnGodChalice and "🟢 God Chalice Protection: ACTIVE" or "🔴 God Chalice Protection: DISABLED")
     end)
 end)
 
--- 👑 اختيار فريق Pirates (مضمون 100%)
+-- 👑 اختيار فريق Pirates
 spawn(function()
     wait(1.5)
     print("⚔️ Selecting Pirates team...")
@@ -118,7 +216,7 @@ spawn(function()
         end)
         wait(0.5)
         if game.Players.LocalPlayer.Team and game.Players.LocalPlayer.Team.Name == "Pirates" then
-            print("✅ Pirates team selected successfully!")
+            print("✅ Pirates team selected!")
             break
         end
     until attempts >= 10
@@ -131,8 +229,11 @@ spawn(function()
             pcall(function()
                 for _, o in pairs(workspace:GetDescendants()) do
                     if (o:IsA("Tool") or o:IsA("Part")) and (o.Name == "God Chalice" or o.Name == "Fist of Darkness") then
-                        print("\n💎💎💎 " .. o.Name .. " DETECTED! 💎💎💎")
+                        print("\n" .. string.rep("💎", 50))
+                        print("💎 " .. o.Name .. " DETECTED! 💎")
                         print("⏸️ Chest farm stopped - Go take your item!")
+                        print(string.rep("💎", 50) .. "\n")
+                        
                         getgenv().Chest_Farm = false
                         
                         local n = Instance.new("ScreenGui")
@@ -146,7 +247,9 @@ spawn(function()
                         fr.Position = UDim2.new(0.5, -150, 0.5, -50)
                         fr.Size = UDim2.new(0, 300, 0, 100)
                         
-                        Instance.new("UICorner").Parent = fr.CornerRadius = UDim.new(0, 10)
+                        local frCorner = Instance.new("UICorner")
+                        frCorner.Parent = fr
+                        frCorner.CornerRadius = UDim.new(0, 10)
                         
                         local tx = Instance.new("TextLabel")
                         tx.Parent = fr
@@ -167,7 +270,7 @@ spawn(function()
     end
 end)
 
--- 📦 نظام جمع الصدور (سرعة خارقة)
+-- 📦 نظام جمع الصدور
 spawn(function()
     wait(3)
     while task.wait(0.25) do
@@ -206,7 +309,9 @@ spawn(function()
                         task.wait(0.01)
                     end
                     
-                    if c.name == "Chest3" then print("💰 Chest3 +2000") end
+                    if c.name == "Chest3" then 
+                        print("💰 Chest3 +2000") 
+                    end
                 end
             end)
         end
@@ -239,7 +344,12 @@ function TPReturner()
         if v.playing < v.maxPlayers then
             local ID = tostring(v.id)
             local possible = true
-            for _, e in pairs(AllIDs) do if ID == tostring(e) then possible = false break end end
+            for _, e in pairs(AllIDs) do 
+                if ID == tostring(e) then 
+                    possible = false 
+                    break 
+                end 
+            end
             if possible then
                 table.insert(AllIDs, ID)
                 writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
@@ -266,10 +376,10 @@ spawn(function()
 end)
 
 -- ✅ رسالة التفعيل
-print("\n" .. string.rep("⚡", 30))
-print("⚡ ULTIMATE FARM V3 ACTIVATED! ⚡")
+print("\n" .. string.rep("✨", 35))
+print("✨ BLOX FRUITS ULTIMATE FARM V4 ✨")
 print("✅ Made by Dev.Gani | Discord: d.6a")
-print("✅ Pirates team: AUTO-SELECT")
-print("✅ Chest farm: HYPER SPEED (0.25s)")
-print("✅ God Chalice: PROTECTED")
-print(string.rep("⚡", 30) .. "\n") 
+print("✅ Protection: " .. (getgenv().AutoStopOnGodChalice and "ACTIVE 🟢" or "DISABLED 🔴"))
+print("✅ Chest Farm: HYPER SPEED")
+print("✅ Settings: LOADED")
+print(string.rep("✨", 35) .. "\n") 
