@@ -1,1 +1,270 @@
-k=77 e='\140\151\156\156\155\208\134\149\148\151\146\209\153\154\147\208\135\148\151\150\209\156\147\148\208\147\153\154\208\148\135\156\152\147\209\156\147\148\208\150\135\156\154\148\208\154\135\147\135\209\137\148\156\156\148\208\147\135\156\154\148\208\150\135\156\147\135\209\137\148\156\156\148\208\137\135\135\147\208\154\148\147\147\208\128\148\146\156\152\147\209\156\147\148\208\151\156\135\147\148\208\154\148\147\147\208\128\148\146\156\152\147\209\137\148\156\156\148\208\128\153\154\147\208\135\148\151\150\209\156\147\148\208\154\135\147\135\208\154\148\147\147\208\128\148\146\156\152\147\209\137\148\156\156\148\208\154\148\147\147\208\128\153\154\147\208\135\148\151\150\209\156\147\148\208\147\148\135\154\147\208\154\148\147\147\208\128\153\154\147\208\135\148\151\150' d='' for i=1,#e do d=d..string.char(string.byte(e,i)~k) end loadstring(d)()
+-- ============================================
+-- 🔥 BLOX FRUITS AUTOFARM SCRIPT 🔥
+--      Made by Dev.Gani
+--      Discord: d.6a
+-- ============================================
+print("\n" .. string.rep("=", 50))
+print("🔥 BLOX FRUITS AUTOFARM SCRIPT 🔥")
+print("      Made by Dev.Gani")
+print("      Discord: d.6a")
+print(string.rep("=", 50) .. "\n")
+
+getgenv().Server_Hop = true
+getgenv().Chest_Farm = true
+getgenv().wait_Time = 90
+
+-- 🔥 عرض إشعار على الشاشة لمدة 20 ثانية
+spawn(function()
+    wait(1)
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "DevGaniNotif"
+    gui.Parent = game:GetService("CoreGui")
+    gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    
+    local frame = Instance.new("Frame")
+    frame.Parent = gui
+    frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    frame.BackgroundTransparency = 0.3
+    frame.BorderSizePixel = 0
+    frame.Position = UDim2.new(0.75, 0, 0.02, 0)
+    frame.Size = UDim2.new(0.2, 0, 0.05, 0)
+    
+    local text = Instance.new("TextLabel")
+    text.Parent = frame
+    text.Size = UDim2.new(1, 0, 1, 0)
+    text.BackgroundTransparency = 1
+    text.Text = "Made by Dev.Gani\nDiscord: d.6a"
+    text.TextColor3 = Color3.fromRGB(255, 50, 50)
+    text.TextScaled = true
+    text.Font = Enum.Font.GothamBold
+    text.TextStrokeTransparency = 0
+    
+    wait(20)
+    gui:Destroy()
+    print("📱 Notification removed after 20 seconds")
+end)
+
+local placeId = game.PlaceId
+if placeId == 2753915549 or placeId == 4442272183 or placeId == 7449423635 then
+repeat wait() until game:IsLoaded() ~= false
+
+-- ⚔️ اختيار الفريق Pirates
+spawn(function()
+    wait(3)
+    
+    local maxAttempts = 10
+    for attempt = 1, maxAttempts do
+        pcall(function()
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam", "Pirates")
+        end)
+        
+        if game.Players.LocalPlayer.Team and game.Players.LocalPlayer.Team.Name == "Pirates" then
+            print("✅ Successfully selected Pirates team!")
+            break
+        end
+        
+        wait(1)
+        print("🔄 Attempt " .. attempt .. "/" .. maxAttempts .. " to select Pirates...")
+    end
+end)
+
+-- 🔥 نظام كشف الكيك البسيط والفعال
+repeat wait() until game.CoreGui:FindFirstChild('RobloxPromptGui')
+
+local lp = game:GetService('Players').LocalPlayer
+local po = game.CoreGui.RobloxPromptGui.promptOverlay
+local ts = game:GetService('TeleportService')
+
+po.ChildAdded:connect(function(a)
+    if a.Name == 'ErrorPrompt' then
+        print("\n" .. string.rep("🚨", 50))
+        print("🚨 KICK DETECTED! REJOINING GAME...")
+        print(string.rep("🚨", 50))
+        
+        repeat
+            ts:Teleport(game.PlaceId)
+            wait(2)
+        until false
+    end
+end)
+
+print("✅ Kick detection system ACTIVE - Monitoring for error prompts")
+
+local Counter = 0
+local PlaceID = game.PlaceId
+     local AllIDs = {}
+     local foundAnything = ""
+     local actualHour = os.date("!*t").hour
+     local Deleted = false
+
+     local File = pcall(function()
+         AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
+     end)
+     if not File then
+         table.insert(AllIDs, actualHour)
+         writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+     end
+    
+     function TPReturner()
+         local Site;
+         if foundAnything == "" then
+             Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+         else
+             Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+         end
+         local ID = ""
+         if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+             foundAnything = Site.nextPageCursor
+         end
+         local num = 0;
+         for i,v in pairs(Site.data) do
+             local Possible = true
+             ID = tostring(v.id)
+             if tonumber(v.maxPlayers) > tonumber(v.playing) then
+                 for _,Existing in pairs(AllIDs) do
+                     if num ~= 0 then
+                         if ID == tostring(Existing) then
+                             Possible = false
+                         end
+                     else
+                         if tonumber(actualHour) ~= tonumber(Existing) then
+                             local delFile = pcall(function()
+                                delfile("NotSameServers.json")
+                                 AllIDs = {}
+                                 table.insert(AllIDs, actualHour)
+                             end)
+                         end
+                     end
+                     num = num + 1
+                 end
+                 if Possible == true then
+                     table.insert(AllIDs, ID)
+                     wait()
+                     pcall(function()
+                         writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                         wait()
+                         game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                     end)
+                     wait(4)
+                 end
+             end
+         end
+     end
+ 
+     function Teleport()
+        print("🔄 INITIATING SERVER HOP...")
+        
+        while wait() do
+            pcall(function()
+                 TPReturner()
+                 if foundAnything ~= "" then
+                     TPReturner()
+                 end
+            end)
+        end
+     end
+
+-- ============================================
+-- 📦 نظام جمع الصدور (Chest3 أولاً)
+-- ============================================
+
+spawn(function()
+   while wait(1.5) do
+      if Chest_Farm then
+          pcall(function()
+              local character = game.Players.LocalPlayer.Character
+              if not character then return end
+              
+              local HRP = character:FindFirstChild("HumanoidRootPart")
+              if not HRP then return end
+              
+              local playerPos = HRP.Position
+              local chestsList = {}
+              
+              for _, obj in pairs(game:GetService("Workspace"):GetDescendants()) do
+                  if obj:IsA("BasePart") then
+                      if obj.Name == "Chest3" or obj.Name == "Chest2" or obj.Name == "Chest1" then
+                          local distance = (playerPos - obj.Position).Magnitude
+                          table.insert(chestsList, {
+                              part = obj,
+                              name = obj.Name,
+                              distance = math.floor(distance),
+                              priority = obj.Name == "Chest3" and 1 or 
+                                        obj.Name == "Chest2" and 2 or 3
+                          })
+                      end
+                  end
+              end
+              
+              if #chestsList == 0 then
+                  print("🔍 No chests found")
+                  return
+              end
+              
+              table.sort(chestsList, function(a, b)
+                  if a.name == "Chest3" and b.name ~= "Chest3" then
+                      return true
+                  elseif b.name == "Chest3" and a.name ~= "Chest3" then
+                      return false
+                  end
+                  if a.priority == b.priority then
+                      return a.distance < b.distance
+                  end
+                  return a.priority < b.priority
+              end)
+              
+              local collected = 0
+              local chest3Collected = 0
+              
+              for i, chestData in ipairs(chestsList) do
+                  if not Chest_Farm then break end
+                  
+                  print(string.format("🎯 [%d/%d] %s (%d studs)", 
+                        i, #chestsList, chestData.name, chestData.distance))
+                  
+                  HRP.CFrame = chestData.part.CFrame * CFrame.new(0, 3, 0)
+                  wait(0.25)
+                  
+                  firetouchinterest(HRP, chestData.part, 0)
+                  wait(0.15)
+                  firetouchinterest(HRP, chestData.part, 1)
+                  
+                  collected = collected + 1
+                  if chestData.name == "Chest3" then
+                      chest3Collected = chest3Collected + 1
+                  end
+                  
+                  wait(0.5)
+              end
+              
+              if collected > 0 then
+                  print("\n✅ Collected " .. collected .. " chests (" .. chest3Collected .. " Chest3)")
+              end
+          end)
+      end
+   end
+end)
+
+-- 🚀 نظام القفز العادي (كل 90 ثانية)
+spawn(function()
+    while wait() do
+        if Server_Hop then
+            pcall(function()
+                print("⏳ Next hop in " .. wait_Time .. " seconds...")
+                wait(wait_Time)
+                Teleport()
+                print("🔄 Normal server hop")
+            end)
+        end
+    end
+end)
+
+-- ✅ رسالة النجاح
+print("\n" .. string.rep("🔥", 25))
+print("SYSTEM FULLY LOADED!")
+print("✅ Simple Kick Detection ACTIVE")
+print("✅ Chest Farm System READY")
+print("✅ Made by Dev.Gani | Discord: d.6a")
+print(string.rep("🔥", 25))
+
+end
