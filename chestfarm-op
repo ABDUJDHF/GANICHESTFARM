@@ -14,7 +14,7 @@ print(string.rep("💰", 50) .. "\n")
 -- ⚡ الإعدادات
 getgenv().Server_Hop = true
 getgenv().Chest_Farm = true
-getgenv().wait_Time = 9000
+getgenv().wait_Time = 100
 getgenv().AutoStopOnGodChalice = true
 
 -- 💾 تحميل الإعدادات
