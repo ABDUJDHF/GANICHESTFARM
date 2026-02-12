@@ -3,12 +3,14 @@
 --      Made by Dev.Gani
 --      Discord: d.6a
 --      💰 Chest3 أولاً ثم Chest2 ثم Chest1
+--      🪄 تكبير الصندوق إلى 500x500x500
 -- ============================================
 print("\n" .. string.rep("💰", 50))
 print("💰 BLOX FRUITS - CHEST3 PRIORITY EDITION 💰")
 print("      Made by Dev.Gani")
 print("      Discord: d.6a")
 print("      🔥 Chest3 > Chest2 > Chest1")
+print("      🪄 Chest Size: 500x500x500")
 print(string.rep("💰", 50) .. "\n")
 
 -- ⚡ الإعدادات
@@ -56,7 +58,7 @@ spawn(function()
     frame.BackgroundTransparency = 0.2
     frame.BorderSizePixel = 0
     frame.Position = UDim2.new(0.75, 0, 0.02, 0)
-    frame.Size = UDim2.new(0, 220, 0, 50)
+    frame.Size = UDim2.new(0, 240, 0, 60)
     frame.Active = true
     frame.Draggable = true
     
@@ -69,8 +71,8 @@ spawn(function()
     text.Size = UDim2.new(1, -10, 1, 0)
     text.Position = UDim2.new(0, 10, 0, 0)
     text.BackgroundTransparency = 1
-    text.Text = "💰 Dev.Gani (Chest3 Priority)\n💬 d.6a"
-    text.TextColor3 = Color3.fromRGB(255, 215, 0)  -- ذهبي
+    text.Text = "💰 Dev.Gani (500x Size)\n💬 d.6a"
+    text.TextColor3 = Color3.fromRGB(255, 215, 0)
     text.TextScaled = true
     text.Font = Enum.Font.GothamBold
     text.TextXAlignment = Enum.TextXAlignment.Left
@@ -195,7 +197,7 @@ spawn(function()
 end)
 
 -- ============================================
--- 💰💰💰 **CHEST3 PRIORITY - V3 EDITION** 💰💰💰
+-- 💰💰💰 **CHEST3 PRIORITY + SIZE 500x500x500** 💰💰💰
 -- ============================================
 spawn(function()
     wait(5)
@@ -212,19 +214,20 @@ spawn(function()
                 for _, touch in pairs(workspace:GetDescendants()) do
                     if touch:IsA("TouchTransmitter") then
                         local chest = touch.Parent
-                        
+
                         -- تأكد إن الـ Parent هو Chest1/2/3 ولسه موجود
                         if chest and chest:IsA("BasePart") then
                             if chest.Name == "Chest1" or chest.Name == "Chest2" or chest.Name == "Chest3" then
                                 if chest.Parent and chest:IsDescendantOf(workspace) then
                                     local dist = (hrp.Position - chest.Position).Magnitude
                                     local priority = chest.Name == "Chest3" and 1 or chest.Name == "Chest2" and 2 or 3
-                                    
+
                                     table.insert(validChests, {
                                         chest = chest,
                                         dist = dist,
                                         priority = priority,
-                                        name = chest.Name
+                                        name = chest.Name,
+                                        originalSize = chest.Size
                                     })
                                 end
                             end
@@ -235,19 +238,28 @@ spawn(function()
                 -- 🔥🔥🔥 الترتيب حسب الأولوية: Chest3 أولاً، ثم الأقرب 🔥🔥🔥
                 table.sort(validChests, function(a, b)
                     if a.priority == b.priority then
-                        return a.dist < b.dist  -- نفس النوع، الأقرب يفوز
+                        return a.dist < b.dist
                     end
-                    return a.priority < b.priority  -- الأولوية للأقل رقماً (Chest3 = 1)
+                    return a.priority < b.priority
                 end)
 
-                -- 🎯 خذ أول Chest في القائمة (الأفضلية المطلقة لـ Chest3)
+                -- 🎯 خذ أول Chest في القائمة
                 if #validChests > 0 then
                     local target = validChests[1]
                     print("💰 [PRIORITY] Taking " .. target.name .. " (Priority: " .. target.priority .. ")")
+
+                    -- 🪄🪄🪄 تكبير الصندوق إلى 500x500x500 🪄🪄🪄
+                    target.chest.Size = Vector3.new(500, 500, 500)
+                    print("✨ CHEST SIZE CHANGED TO 500x500x500!")
                     
+                    -- انتظر لحظة عشان التكبير يشتغل
+                    task.wait(0.1)
+
+                    -- طير للصندوق
                     hrp.CFrame = target.chest.CFrame * CFrame.new(0, 2, 0)
                     task.wait(0.1)
 
+                    -- لمس الصندوق 4 مرات عشان نضمن الجمع
                     for i = 1, 4 do
                         firetouchinterest(hrp, target.chest, 0)
                         task.wait(0.02)
@@ -325,10 +337,11 @@ end)
 
 -- ✅ رسالة التفعيل
 print("\n" .. string.rep("💰", 35))
-print("💰 CHEST3 PRIORITY MODE - ACTIVATED 💰")
+print("💰 CHEST3 PRIORITY + 500x SIZE 💰")
 print("✅ Made by Dev.Gani | Discord: d.6a")
 print("✅ 🔥 Chest3 > Chest2 > Chest1")
 print("✅ 🥇 أولوية مطلقة لـ Chest3")
-print("✅ ⏱️ Chest every 5 seconds")
+print("✅ 🪄 تكبير الصندوق إلى 500x500x500")
+print("✅ ⏱️ Chest every 1 second")
 print("✅ 🖱️ Control panel is DRAGGABLE")
-print(string.rep("💰", 35) .. "\n")
+print(string.rep("💰", 35) .. "\n") 
