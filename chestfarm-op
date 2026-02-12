@@ -1,13 +1,15 @@
 -- ============================================
--- 🔥 BLOX FRUITS ULTIMATE FARM V5 🔥
+-- 🔥 BLOX FRUITS - نسخة السلام V1 🔥
 --      Made by Dev.Gani
 --      Discord: d.6a
+--      🕊️ كل 10 ثواني - فاصل أمان
 -- ============================================
-print("\n" .. string.rep("🔥", 50))
-print("🔥 BLOX FRUITS ULTIMATE FARM V5 🔥")
+print("\n" .. string.rep("🕊️", 50))
+print("🕊️ BLOX FRUITS - SAFE MODE V1 🕊️")
 print("      Made by Dev.Gani")
 print("      Discord: d.6a")
-print(string.rep("🔥", 50) .. "\n")
+print("      ⏱️ Chest every 10 seconds")
+print(string.rep("🕊️", 50) .. "\n")
 
 -- ⚡ الإعدادات
 getgenv().Server_Hop = true
@@ -15,7 +17,7 @@ getgenv().Chest_Farm = true
 getgenv().wait_Time = 9000
 getgenv().AutoStopOnGodChalice = true
 
--- 💾 تحميل الإعدادات + إنشاء الملف
+-- 💾 تحميل الإعدادات
 local settingsFile = "DevGani_Settings.json"
 local function loadSettings()
     local success, result = pcall(function()
@@ -46,6 +48,7 @@ spawn(function()
     gui.Name = "DevGaniNotif"
     gui.Parent = game:GetService("CoreGui")
     gui.ResetOnSpawn = false
+    gui.IgnoreGuiInset = true
     
     local frame = Instance.new("Frame")
     frame.Parent = gui
@@ -53,7 +56,9 @@ spawn(function()
     frame.BackgroundTransparency = 0.2
     frame.BorderSizePixel = 0
     frame.Position = UDim2.new(0.75, 0, 0.02, 0)
-    frame.Size = UDim2.new(0.22, 0, 0.06, 0)
+    frame.Size = UDim2.new(0, 200, 0, 50)
+    frame.Active = true
+    frame.Draggable = true  -- ✅ هذا يخلي الزر يتحرك
     
     local corner = Instance.new("UICorner")
     corner.Parent = frame
@@ -61,19 +66,20 @@ spawn(function()
     
     local text = Instance.new("TextLabel")
     text.Parent = frame
-    text.Size = UDim2.new(1, 0, 1, 0)
+    text.Size = UDim2.new(1, -10, 1, 0)
+    text.Position = UDim2.new(0, 10, 0, 0)
     text.BackgroundTransparency = 1
-    text.Text = "🔥 Made by Dev.Gani\n💬 Discord: d.6a"
-    text.TextColor3 = Color3.fromRGB(255, 100, 100)
+    text.Text = "🕊️ Dev.Gani (Safe Mode)\n💬 d.6a"
+    text.TextColor3 = Color3.fromRGB(100, 255, 100)
     text.TextScaled = true
     text.Font = Enum.Font.GothamBold
-    text.TextStrokeTransparency = 0.5
+    text.TextXAlignment = Enum.TextXAlignment.Left
     
     wait(20)
     gui:Destroy()
 end)
 
--- 🎮 **زر التحكم الأنيق V5 - مع زر إيقاف يدوي**
+-- 🎮 **زر التحكم المتحرك - ما ياخد نص شاشة**
 spawn(function()
     wait(2)
     local s = Instance.new("ScreenGui")
@@ -82,14 +88,16 @@ spawn(function()
     s.ResetOnSpawn = false
     s.IgnoreGuiInset = true
     
-    -- الخلفية الرئيسية
+    -- ✅ الخلفية الرئيسية - قابلة للسحب
     local main = Instance.new("Frame")
     main.Parent = s
     main.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
     main.BackgroundTransparency = 0.15
     main.BorderSizePixel = 0
     main.Position = UDim2.new(0.03, 0, 0.15, 0)
-    main.Size = UDim2.new(0, 340, 0, 70)
+    main.Size = UDim2.new(0, 280, 0, 60)  -- 🟢 أصغر بكثير
+    main.Active = true
+    main.Draggable = true  -- ✅ اسحب الزر في أي مكان
     
     local mainCorner = Instance.new("UICorner")
     mainCorner.Parent = main
@@ -101,29 +109,18 @@ spawn(function()
     stroke.Thickness = 1.5
     stroke.Transparency = 0.3
     
-    local shadow = Instance.new("ImageLabel")
-    shadow.Parent = main
-    shadow.BackgroundTransparency = 1
-    shadow.Position = UDim2.new(0, -5, 0, -5)
-    shadow.Size = UDim2.new(1, 10, 1, 10)
-    shadow.Image = "rbxassetid://1316045217"
-    shadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
-    shadow.ImageTransparency = 0.7
-    shadow.ScaleType = Enum.ScaleType.Slice
-    shadow.SliceCenter = Rect.new(10, 10, 118, 118)
-    
-    -- أيقونة الحماية
+    -- أيقونة الحماية (صغيرة)
     local iconFrame = Instance.new("Frame")
     iconFrame.Parent = main
     iconFrame.BackgroundColor3 = getgenv().AutoStopOnGodChalice and Color3.fromRGB(0, 180, 0) or Color3.fromRGB(180, 0, 0)
     iconFrame.BackgroundTransparency = 0.1
     iconFrame.BorderSizePixel = 0
-    iconFrame.Position = UDim2.new(0, 10, 0.5, -20)
-    iconFrame.Size = UDim2.new(0, 40, 0, 40)
+    iconFrame.Position = UDim2.new(0, 8, 0.5, -15)
+    iconFrame.Size = UDim2.new(0, 30, 0, 30)  -- 🟢 أصغر
     
     local iconCorner = Instance.new("UICorner")
     iconCorner.Parent = iconFrame
-    iconCorner.CornerRadius = UDim.new(0, 10)
+    iconCorner.CornerRadius = UDim.new(0, 8)
     
     local icon = Instance.new("TextLabel")
     icon.Parent = iconFrame
@@ -134,42 +131,18 @@ spawn(function()
     icon.TextScaled = true
     icon.Font = Enum.Font.GothamBold
     
-    -- عنوان الحماية
-    local title = Instance.new("TextLabel")
-    title.Parent = main
-    title.BackgroundTransparency = 1
-    title.Position = UDim2.new(0, 60, 0, 12)
-    title.Size = UDim2.new(0, 120, 0, 20)
-    title.Text = "God Chalice"
-    title.TextColor3 = Color3.fromRGB(220, 220, 220)
-    title.TextScaled = true
-    title.Font = Enum.Font.GothamBold
-    title.TextXAlignment = Enum.TextXAlignment.Left
-    
-    -- حالة الحماية
-    local status = Instance.new("TextLabel")
-    status.Parent = main
-    status.BackgroundTransparency = 1
-    status.Position = UDim2.new(0, 60, 0, 35)
-    status.Size = UDim2.new(0, 100, 0, 20)
-    status.Text = getgenv().AutoStopOnGodChalice and "🟢 ACTIVE" or "🔴 DISABLED"
-    status.TextColor3 = getgenv().AutoStopOnGodChalice and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 100, 100)
-    status.TextScaled = true
-    status.Font = Enum.Font.GothamSemibold
-    status.TextXAlignment = Enum.TextXAlignment.Left
-    
-    -- زر تشغيل/إيقاف الحماية التلقائية
+    -- زر الحماية (ON/OFF) أصغر
     local button = Instance.new("TextButton")
     button.Parent = main
     button.BackgroundColor3 = getgenv().AutoStopOnGodChalice and Color3.fromRGB(0, 150, 0) or Color3.fromRGB(150, 0, 0)
     button.BackgroundTransparency = 0.2
     button.BorderSizePixel = 0
-    button.Position = UDim2.new(0, 185, 0.5, -15)
-    button.Size = UDim2.new(0, 45, 0, 30)
+    button.Position = UDim2.new(0, 140, 0.5, -12)
+    button.Size = UDim2.new(0, 40, 0, 24)  -- 🟢 أصغر
     
     local buttonCorner = Instance.new("UICorner")
     buttonCorner.Parent = button
-    buttonCorner.CornerRadius = UDim.new(0, 8)
+    buttonCorner.CornerRadius = UDim.new(0, 6)
     
     local buttonText = Instance.new("TextLabel")
     buttonText.Parent = button
@@ -180,71 +153,40 @@ spawn(function()
     buttonText.TextScaled = true
     buttonText.Font = Enum.Font.GothamBold
     
-    -- ⚡⚡⚡ **زر الإيقاف اليدوي الجديد** ⚡⚡⚡
+    -- زر الإيقاف اليدوي (أصغر)
     local stopButton = Instance.new("TextButton")
     stopButton.Parent = main
     stopButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
     stopButton.BackgroundTransparency = 0.1
     stopButton.BorderSizePixel = 0
-    stopButton.Position = UDim2.new(0, 245, 0.5, -15)
-    stopButton.Size = UDim2.new(0, 65, 0, 30)
+    stopButton.Position = UDim2.new(0, 190, 0.5, -12)
+    stopButton.Size = UDim2.new(0, 55, 0, 24)  -- 🟢 أصغر
     
     local stopButtonCorner = Instance.new("UICorner")
     stopButtonCorner.Parent = stopButton
-    stopButtonCorner.CornerRadius = UDim.new(0, 8)
+    stopButtonCorner.CornerRadius = UDim.new(0, 6)
     
     local stopButtonText = Instance.new("TextLabel")
     stopButtonText.Parent = stopButton
     stopButtonText.Size = UDim2.new(1, 0, 1, 0)
     stopButtonText.BackgroundTransparency = 1
-    stopButtonText.Text = "⏹️ STOP"
+    stopButtonText.Text = "⏹️"
     stopButtonText.TextColor3 = Color3.fromRGB(255, 255, 255)
     stopButtonText.TextScaled = true
     stopButtonText.Font = Enum.Font.GothamBold
     
-    -- 🔴 **وظيفة زر الإيقاف اليدوي**
+    -- 🎯 وظائف الأزرار
     stopButton.MouseButton1Click:Connect(function()
         getgenv().Chest_Farm = false
         print("\n🛑 MANUAL STOP: Chest farming stopped by user!")
-        
-        -- إشعار بالتوقف
-        local n = Instance.new("ScreenGui")
-        n.Parent = game:GetService("CoreGui")
-        n.Name = "ManualStopAlert"
-        
-        local fr = Instance.new("Frame")
-        fr.Parent = n
-        fr.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-        fr.BackgroundTransparency = 0.2
-        fr.Position = UDim2.new(0.5, -150, 0.8, -50)
-        fr.Size = UDim2.new(0, 300, 0, 80)
-        
-        local frCorner = Instance.new("UICorner")
-        frCorner.Parent = fr
-        frCorner.CornerRadius = UDim.new(0, 10)
-        
-        local tx = Instance.new("TextLabel")
-        tx.Parent = fr
-        tx.Size = UDim2.new(1, 0, 1, 0)
-        tx.BackgroundTransparency = 1
-        tx.Text = "🛑 FARM STOPPED MANUALLY\n✅ Take your God Chalice now!"
-        tx.TextColor3 = Color3.fromRGB(255, 100, 100)
-        tx.TextScaled = true
-        tx.Font = Enum.Font.GothamBold
-        
-        wait(3)
-        n:Destroy()
     end)
     
-    -- وظيفة زر الحماية التلقائية
     button.MouseButton1Click:Connect(function()
         getgenv().AutoStopOnGodChalice = not getgenv().AutoStopOnGodChalice
         getgenv().Chest_Farm = true
         
         iconFrame.BackgroundColor3 = getgenv().AutoStopOnGodChalice and Color3.fromRGB(0, 180, 0) or Color3.fromRGB(180, 0, 0)
         icon.Text = getgenv().AutoStopOnGodChalice and "🛡️" or "⚔️"
-        status.Text = getgenv().AutoStopOnGodChalice and "🟢 ACTIVE" or "🔴 DISABLED"
-        status.TextColor3 = getgenv().AutoStopOnGodChalice and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 100, 100)
         button.BackgroundColor3 = getgenv().AutoStopOnGodChalice and Color3.fromRGB(0, 150, 0) or Color3.fromRGB(150, 0, 0)
         buttonText.Text = getgenv().AutoStopOnGodChalice and "ON" or "OFF"
         
@@ -256,62 +198,22 @@ end)
 -- 👑 اختيار فريق Pirates
 spawn(function()
     wait(1.5)
-    print("⚔️ Selecting Pirates team...")
-    local attempts = 0
-    repeat
-        attempts = attempts + 1
-        pcall(function()
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam", "Pirates")
-        end)
-        wait(0.5)
-        if game.Players.LocalPlayer.Team and game.Players.LocalPlayer.Team.Name == "Pirates" then
-            print("✅ Pirates team selected!")
-            break
-        end
-    until attempts >= 10
+    pcall(function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam", "Pirates")
+    end)
+    wait(0.5)
+    print("✅ Pirates team selected!")
 end)
 
--- 💎 مراقبة God Chalice و Fist of Darkness
+-- 💎 مراقبة God Chalice
 spawn(function()
     while wait(1) do
         if getgenv().AutoStopOnGodChalice and getgenv().Chest_Farm then
             pcall(function()
                 for _, o in pairs(workspace:GetDescendants()) do
                     if (o:IsA("Tool") or o:IsA("Part")) and (o.Name == "God Chalice" or o.Name == "Fist of Darkness") then
-                        print("\n" .. string.rep("💎", 50))
-                        print("💎 " .. o.Name .. " DETECTED! 💎")
-                        print("⏸️ Chest farm stopped - Go take your item!")
-                        print(string.rep("💎", 50) .. "\n")
-                        
+                        print("\n💎💎💎 " .. o.Name .. " DETECTED! 💎💎💎")
                         getgenv().Chest_Farm = false
-                        
-                        local n = Instance.new("ScreenGui")
-                        n.Parent = game:GetService("CoreGui")
-                        n.Name = "ItemAlert"
-                        
-                        local fr = Instance.new("Frame")
-                        fr.Parent = n
-                        fr.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-                        fr.BackgroundTransparency = 0.2
-                        fr.BorderSizePixel = 0
-                        fr.Position = UDim2.new(0.5, -150, 0.5, -50)
-                        fr.Size = UDim2.new(0, 300, 0, 100)
-                        
-                        local frCorner = Instance.new("UICorner")
-                        frCorner.Parent = fr
-                        frCorner.CornerRadius = UDim.new(0, 10)
-                        
-                        local tx = Instance.new("TextLabel")
-                        tx.Parent = fr
-                        tx.Size = UDim2.new(1, 0, 1, 0)
-                        tx.BackgroundTransparency = 1
-                        tx.Text = "💎 " .. o.Name .. " FOUND!\n⏸️ Farm Stopped"
-                        tx.TextColor3 = Color3.fromRGB(255, 215, 0)
-                        tx.TextScaled = true
-                        tx.Font = Enum.Font.GothamBold
-                        
-                        wait(5)
-                        n:Destroy()
                         break
                     end
                 end
@@ -320,144 +222,70 @@ spawn(function()
     end
 end)
 
--- 📦 نظام جمع الصدور - الفحص الذكي لـ TouchInterest ✅
+-- ============================================
+-- 🕊️ **نسخة السلام - Chest كل 10 ثواني** 🕊️
+-- ============================================
 spawn(function()
-    wait(3)
-    while task.wait(0.25) do
+    wait(5)
+    while task.wait(10) do  -- ⏱️ ينتظر 10 ثواني بالضبط
         if getgenv().Chest_Farm and game.Players.LocalPlayer.Character then
             pcall(function()
                 local hrp = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
                 if not hrp then return end
 
-                local chests = {}
+                -- 🔍 دور على أقرب Chest فيه TouchInterest
+                local targetChest = nil
+                local minDist = math.huge
+                
                 for _, obj in pairs(workspace:GetDescendants()) do
                     if obj:IsA("BasePart") and (obj.Name == "Chest3" or obj.Name == "Chest2" or obj.Name == "Chest1") then
-                        
-                        -- 🔍 الفحص الإجباري: هل في TouchInterest جوا الـ Chest؟
-                        local hasTouchInterest = false
+                        -- فحص TouchInterest
                         for _, child in pairs(obj:GetDescendants()) do
                             if child:IsA("TouchTransmitter") then
-                                hasTouchInterest = true
+                                local dist = (hrp.Position - obj.Position).Magnitude
+                                if dist < minDist then
+                                    minDist = dist
+                                    targetChest = obj
+                                end
                                 break
                             end
-                        end
-
-                        -- ✅ إذا فيه TouchInterest, نضيفه للقائمة
-                        if hasTouchInterest then
-                            table.insert(chests, {
-                                part = obj,
-                                name = obj.Name,
-                                dist = (hrp.Position - obj.Position).Magnitude,
-                                priority = obj.Name == "Chest3" and 1 or obj.Name == "Chest2" and 2 or 3
-                            })
                         end
                     end
                 end
 
-                table.sort(chests, function(a, b)
-                    if a.priority == b.priority then 
-                        return a.dist < b.dist 
-                    end
-                    return a.priority < b.priority
-                end)
-
-                for _, c in ipairs(chests) do
-                    if not getgenv().Chest_Farm then break end
-
-                    hrp.CFrame = c.part.CFrame * CFrame.new(0, 2, 0)
-                    task.wait(0.08)
-
+                -- 🎯 خذ الـ Chest
+                if targetChest then
+                    print("🕊️ [SAFE MODE] Teleporting to " .. targetChest.Name)
+                    hrp.CFrame = targetChest.CFrame * CFrame.new(0, 2, 0)
+                    task.wait(0.1)
+                    
                     for i = 1, 4 do
-                        firetouchinterest(hrp, c.part, 0)
-                        task.wait(0.01)
-                        firetouchinterest(hrp, c.part, 1)
-                        task.wait(0.01)
+                        firetouchinterest(hrp, targetChest, 0)
+                        task.wait(0.02)
+                        firetouchinterest(hrp, targetChest, 1)
+                        task.wait(0.02)
                     end
-
-                    if c.name == "Chest3" then 
-                        print("💰 Chest3 +2000") 
+                    
+                    if targetChest.Name == "Chest3" then 
+                        print("🕊️💰 Chest3 +2000 (Safe Mode)")
+                    else
+                        print("🕊️✅ " .. targetChest.Name .. " collected")
                     end
+                    
+                    -- 🏁 يرجع لمكانه ويستنا 10 ثواني (الـ task.wait(10) فوق)
+                else
+                    print("🕊️🔍 No chests with TouchInterest found")
                 end
             end)
         end
     end
 end)
 
--- 🔥 نظام السيرفر هوپ للكيك
-local PlaceID = game.PlaceId
-local AllIDs = {}
-local foundAnything = ""
-
-pcall(function() 
-    AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json")) 
-end)
-
-function TPReturner()
-    local Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
-    
-    for _, v in pairs(Site.data) do
-        if v.playing < v.maxPlayers then
-            local ID = tostring(v.id)
-            local possible = true
-            
-            for _, e in pairs(AllIDs) do 
-                if ID == tostring(e) then 
-                    possible = false 
-                    break 
-                end 
-            end
-            
-            if possible then
-                table.insert(AllIDs, ID)
-                writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
-                game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
-                wait(4)
-                return true
-            end
-        end
-    end
-    return false
-end
-
--- كشف الكيك مع سيرفر هوپ
-repeat wait() until game.CoreGui:FindFirstChild('RobloxPromptGui')
-local po = game.CoreGui.RobloxPromptGui.promptOverlay
-
-po.ChildAdded:Connect(function(a)
-    if a.Name == 'ErrorPrompt' then
-        print("\n🚨 KICK DETECTED! FINDING NEW SERVER...")
-        wait(1)
-        
-        local success = TPReturner()
-        if not success then
-            wait(2)
-            TPReturner()
-        end
-    end
-end)
-
-function Teleport()
-    print("🔄 Server hopping...")
-    TPReturner()
-end
-
--- 🚀 القفز العادي
-spawn(function()
-    while wait() do
-        if getgenv().Server_Hop then
-            wait(getgenv().wait_Time)
-            Teleport()
-        end
-    end
-end)
-
 -- ✅ رسالة التفعيل
-print("\n" .. string.rep("✨", 35))
-print("✨ BLOX FRUITS ULTIMATE FARM V5 ✨")
+print("\n" .. string.rep("🕊️", 35))
+print("🕊️ SAFE MODE V1 - ACTIVATED 🕊️")
 print("✅ Made by Dev.Gani | Discord: d.6a")
-print("✅ Protection: " .. (getgenv().AutoStopOnGodChalice and "ACTIVE 🟢" or "DISABLED 🔴"))
-print("✅ Manual STOP Button: ⏹️ READY")
-print("✅ Chest Farm: SMART TOUCHINTEREST CHECK")
+print("✅ ⏱️ Chest every 10 seconds")
+print("✅ 🖱️ Control panel is DRAGGABLE")
 print("✅ Settings: LOADED")
-print("✅ Anti-Kick: SERVER HOP")
-print(string.rep("✨", 35) .. "\n")
+print(string.rep("🕊️", 35) .. "\n") 
