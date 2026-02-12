@@ -1,15 +1,15 @@
 -- ============================================
--- ✅ BLOX FRUITS - SAFE MODE V3 ✅
+-- ✅ BLOX FRUITS - SAFE MODE V3 - CHEST3 PRIORITY ✅
 --      Made by Dev.Gani
 --      Discord: d.6a
---      ✅ يتأكد إن TouchInterest أبوه Chest
+--      💰 Chest3 أولاً ثم Chest2 ثم Chest1
 -- ============================================
-print("\n" .. string.rep("✅", 50))
-print("✅ BLOX FRUITS - SAFE MODE V3 ✅")
+print("\n" .. string.rep("💰", 50))
+print("💰 BLOX FRUITS - CHEST3 PRIORITY EDITION 💰")
 print("      Made by Dev.Gani")
 print("      Discord: d.6a")
-print("      🔍 TouchInterest → Parent = Chest✅")
-print(string.rep("✅", 50) .. "\n")
+print("      🔥 Chest3 > Chest2 > Chest1")
+print(string.rep("💰", 50) .. "\n")
 
 -- ⚡ الإعدادات
 getgenv().Server_Hop = true
@@ -69,8 +69,8 @@ spawn(function()
     text.Size = UDim2.new(1, -10, 1, 0)
     text.Position = UDim2.new(0, 10, 0, 0)
     text.BackgroundTransparency = 1
-    text.Text = "✅ Dev.Gani (V3 - Parent Check)\n💬 d.6a"
-    text.TextColor3 = Color3.fromRGB(100, 255, 100)
+    text.Text = "💰 Dev.Gani (Chest3 Priority)\n💬 d.6a"
+    text.TextColor3 = Color3.fromRGB(255, 215, 0)  -- ذهبي
     text.TextScaled = true
     text.Font = Enum.Font.GothamBold
     text.TextXAlignment = Enum.TextXAlignment.Left
@@ -195,7 +195,7 @@ spawn(function()
 end)
 
 -- ============================================
--- ✅ **نسخة V3 - Parent = Chest1/2/3 ✅**
+-- 💰💰💰 **CHEST3 PRIORITY - V3 EDITION** 💰💰💰
 -- ============================================
 spawn(function()
     wait(5)
@@ -205,53 +205,61 @@ spawn(function()
                 local hrp = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
                 if not hrp then return end
 
-                local targetChest = nil
-                local minDist = math.huge
-                
-                -- ✅ التفتيش الدقيق:
-                -- 1. دور على أي TouchTransmitter في اللعبة
+                -- قائمة لتخزين كل الصدور الصالحة
+                local validChests = {}
+
+                -- ✅ التفتيش الدقيق على كل TouchTransmitter
                 for _, touch in pairs(workspace:GetDescendants()) do
                     if touch:IsA("TouchTransmitter") then
-                        -- 2. خد Parent بتاع TouchTransmitter
-                        local parentChest = touch.Parent
+                        local chest = touch.Parent
                         
-                        -- 3. تأكد إن الـ Parent هو Chest1 أو Chest2 أو Chest3
-                        if parentChest and parentChest:IsA("BasePart") then
-                            if parentChest.Name == "Chest1" or 
-                               parentChest.Name == "Chest2" or 
-                               parentChest.Name == "Chest3" then
-                                
-                                -- 4. تأكد إن الـ Chest لسه موجود في اللعبة
-                                if parentChest.Parent and parentChest:IsDescendantOf(workspace) then
-                                    local dist = (hrp.Position - parentChest.Position).Magnitude
-                                    if dist < minDist then
-                                        minDist = dist
-                                        targetChest = parentChest
-                                    end
+                        -- تأكد إن الـ Parent هو Chest1/2/3 ولسه موجود
+                        if chest and chest:IsA("BasePart") then
+                            if chest.Name == "Chest1" or chest.Name == "Chest2" or chest.Name == "Chest3" then
+                                if chest.Parent and chest:IsDescendantOf(workspace) then
+                                    local dist = (hrp.Position - chest.Position).Magnitude
+                                    local priority = chest.Name == "Chest3" and 1 or chest.Name == "Chest2" and 2 or 3
+                                    
+                                    table.insert(validChests, {
+                                        chest = chest,
+                                        dist = dist,
+                                        priority = priority,
+                                        name = chest.Name
+                                    })
                                 end
                             end
                         end
                     end
                 end
 
-                -- 🎯 إذا لقينا Chest حقيقي، خذه
-                if targetChest then
-                    print("✅ [V3] Taking " .. targetChest.Name .. " (Valid TouchInterest)")
-                    hrp.CFrame = targetChest.CFrame * CFrame.new(0, 2, 0)
-                    task.wait(0.1)
+                -- 🔥🔥🔥 الترتيب حسب الأولوية: Chest3 أولاً، ثم الأقرب 🔥🔥🔥
+                table.sort(validChests, function(a, b)
+                    if a.priority == b.priority then
+                        return a.dist < b.dist  -- نفس النوع، الأقرب يفوز
+                    end
+                    return a.priority < b.priority  -- الأولوية للأقل رقماً (Chest3 = 1)
+                end)
+
+                -- 🎯 خذ أول Chest في القائمة (الأفضلية المطلقة لـ Chest3)
+                if #validChests > 0 then
+                    local target = validChests[1]
+                    print("💰 [PRIORITY] Taking " .. target.name .. " (Priority: " .. target.priority .. ")")
                     
+                    hrp.CFrame = target.chest.CFrame * CFrame.new(0, 2, 0)
+                    task.wait(0.1)
+
                     for i = 1, 4 do
-                        firetouchinterest(hrp, targetChest, 0)
+                        firetouchinterest(hrp, target.chest, 0)
                         task.wait(0.02)
-                        firetouchinterest(hrp, targetChest, 1)
+                        firetouchinterest(hrp, target.chest, 1)
                         task.wait(0.02)
                     end
-                    
-                    if targetChest.Name == "Chest3" then 
-                        print("💰 Chest3 +2000 (V3)")
+
+                    if target.name == "Chest3" then 
+                        print("💰💰💰 CHEST3 +2000 💰💰💰")
                     end
                 else
-                    print("✅ No valid Chest with correct TouchInterest parent found")
+                    print("💰 No valid chests found")
                 end
             end)
         end
@@ -316,10 +324,11 @@ spawn(function()
 end)
 
 -- ✅ رسالة التفعيل
-print("\n" .. string.rep("✅", 35))
-print("✅ SAFE MODE V3 - ACTIVATED ✅")
+print("\n" .. string.rep("💰", 35))
+print("💰 CHEST3 PRIORITY MODE - ACTIVATED 💰")
 print("✅ Made by Dev.Gani | Discord: d.6a")
-print("✅ 🔍 TouchInterest → Parent = Chest1/2/3 ✅")
-print("✅ ⏱️ Chest every 10 seconds")
+print("✅ 🔥 Chest3 > Chest2 > Chest1")
+print("✅ 🥇 أولوية مطلقة لـ Chest3")
+print("✅ ⏱️ Chest every 5 seconds")
 print("✅ 🖱️ Control panel is DRAGGABLE")
-print(string.rep("✅", 35) .. "\n") 
+print(string.rep("💰", 35) .. "\n")
