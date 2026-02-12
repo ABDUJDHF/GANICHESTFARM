@@ -199,7 +199,7 @@ end)
 -- ============================================
 spawn(function()
     wait(5)
-    while task.wait(10) do
+    while task.wait(5) do
         if getgenv().Chest_Farm and game.Players.LocalPlayer.Character then
             pcall(function()
                 local hrp = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
